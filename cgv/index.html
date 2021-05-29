@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Maze: Three.js demo</title>
+	<style>
+		body { margin: 0; padding: 0; font-size: 0; }
+		canvas { width: 100%; height: 100%; }
+	</style>
+</head>
+<body>
+
+	<script type="module">
+
+import * as THREE from './three.module.js';
+import { GLTFLoader } from "./GLTFLoader.js";
+	var WIDTH = window.innerWidth;
+	var HEIGHT = window.innerHeight;
+
+	var renderer = new THREE.WebGLRenderer({antialias:true});
+	renderer.setSize(WIDTH, HEIGHT);
+	renderer.setClearColor(0xDDDDDD, 1);
+	document.body.appendChild(renderer.domElement);
+
+	var scene = new THREE.Scene();
+
+	var camera = new THREE.PerspectiveCamera(45, WIDTH/HEIGHT);
+	camera.position.z = 80;
+	scene.add(camera);
+
+  const loader = new GLTFLoader();
+
+  var obj ;
+  loader.load( "maze.glb", function ( gltf ) {
+    obj = gltf.scene;
+  	scene.add(gltf.scene);
+
+  }, undefined, function ( error ) {
+
+  	console.error( error );
+
+  } );
+
+	//scene.background = new THREE.Color(0xffffff);
+  var light = new THREE.PointLight(0xFFFFFF);
+
+	//obj.scale(0.5,0.5);
+	//obj.rotation.x = obj.rotation.x + 0.5;
+	light.position.set(-10,20, 50);
+
+  scene.add(light);
+  camera.position.set(10,10, 50);
+
+
+
+	function render() {
+		//obj.rotation.y += 0.01;
+		//cube1.rotation.y += 0.01;
+		requestAnimationFrame(render);
+	//	obj.rotation.y += 0.01;
+
+		renderer.render(scene, camera);
+	}
+	render();
+</script>
+</body>
+</html>
