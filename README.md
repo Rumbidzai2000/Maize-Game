@@ -1,1 +1,1 @@
-# Maize-Game
+# Maze-Game
